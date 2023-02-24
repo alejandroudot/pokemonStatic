@@ -1,0 +1,34 @@
+{
+  "extends": "next/core-web-vitals",
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		"indent": ["error", "tab"],
+		"no-extra-semi": "error",
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error",
+		"no-unused-vars": "warn",
+		"prefer-arrow-callback": [
+			"error", { "allowNamedFunctions": true}
+		],
+		"no-multi-spaces": "warn",
+		"block-spacing": "warn",
+		"space-before-blocks": "warn",
+		"space-in-parens": "warn",
+		"spaced-comment": ["warn", "always", {
+			"block": {
+				"balanced": true
+			}
+		}],
+		"eqeqeq": "warn",
+		"no-alert": "warn",
+		"no-empty-function": "warn",
+		"no-eq-null": "warn",
+		"no-trailing-spaces": "warn",
+		"no-whitespace-before-property": "warn",
+		"space-infix-ops": "warn",
+		"switch-colon-spacing": "warn",
+		"key-spacing": "warn"
+	}
+}
