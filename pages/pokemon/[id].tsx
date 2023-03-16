@@ -106,7 +106,7 @@ export const getStaticPaths: GetStaticPaths = async (/* ctx */) => {
 		paths: pokemons151.map(id => ({
 			params: { id: id }
 		})),
-		fallback: false
+		fallback: 'blocking' // ? Si ponemos false, cuando no existe la pagina nos manda al 404, si ponemos blocking nos intenta buscar la pagina y hacer el fetch
 	}
 }
 
@@ -116,10 +116,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	// ! Arriba destructuramos el ctx y aca el params, una forma de tipar el id sin tener que hacer un tipado gigante arriba en GetStaticProps y mas legible es usando el as
 	const { id } = params as { id: string }
 
+	const pokemon = await getPokemonInfo(id)
+
+	if (!pokemon) {
+		return {
+			// ? Si el pokemon no existe redireccionamos a el home (permenant es para avisarle al bot de google que puede que en un momento exista esta pagina y que no la quite del index)
+			redirect: {
+				destination: '/',
+				permanent: false,
+			}
+		}
+	}
+
 	return {
 		props: {
-			pokemon: await getPokemonInfo(id)
-		}
+			pokemon
+		},
+		revalidate: 86400, // Esto va hacer de vuelta el fetch cada 24hs (es por segundos)
 	}
 }
 
