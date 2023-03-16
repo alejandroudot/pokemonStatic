@@ -102,14 +102,14 @@ export const getStaticPaths: GetStaticPaths = async (/* ctx */) => {
 	// ? const pokemons151 = [...Array(151)].map((value, index) => `${ index + 1 }`)
 	// ! Pedimos la data, creamos un array de 151 espacios, lo iteramos y le dejas el id adentro
 	const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151')
-	const pokemons151: string[] = data.results.map((pokemonInfo) => `${ pokemonInfo.name }`)
+	const pokemons151: string[] = data.results.map((pokemonInfo) => `${ pokemonInfo.name.toLowerCase() }`)
 
 	// ! Aca en paths segun la cantidad de params que le cargemos va a ser la cantidad de paginas que va a generar en buildTime
 	return {
 		paths: pokemons151.map(name => ({
 			params: { name: name }
 		})),
-		fallback: false
+		fallback: 'blocking'
 	}
 }
 
@@ -119,12 +119,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	// ! Arriba destructuramos el ctx y aca el params, una forma de tipar el id sin tener que hacer un tipado gigante arriba en GetStaticProps y mas legible es usando el as
 	const { name } = params as { name: string }
 
+	const pokemon = await getPokemonInfo(name.toLowerCase())
 
+	if (!pokemon) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false
+			}
+		}
+	}
 
 	return {
 		props: {
-			pokemon: await getPokemonInfo(name)
-		}
+			pokemon,
+		},
+		revalidate: 86400
 	}
 }
 
