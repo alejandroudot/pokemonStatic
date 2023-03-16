@@ -16,6 +16,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Sobre el Proyecto
 
-Proyecto creado sobre Next Js, donde probamos la parte de generar archivos estaticos del lado del servidor.
-Tambien añadir metatags al head y el uso de TypeScript en todo el proyecto para tener un buen tipado.
+Proyecto creado sobre Next Js, donde probamos la parte de generar archivos estaticos del lado del servidor ( getStaticProps & getStaticPaths ) y la creacion dinamica de archivos staticos fuera del build time (Static site generation).
+Tambien añadir metatags al head, usamos TypeScript en todo el proyecto para tener un buen tipado.
 Todo este proyecto se encuentra con comentarios que nos ayudaran a comprender lo que se intentaba hacer en el codeo.
